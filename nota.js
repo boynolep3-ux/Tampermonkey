@@ -1,16 +1,18 @@
 // ==UserScript==
 // @name         SoftwareNotabyMJ
 // @namespace    http://tampermonkey.net/
-// @version      8.89
-// @description  Rounded Save Button + San Francisco Font + Realtime Storage Event Sync + Compact 2-Column Layout + Auto-Add Rows + Fast Typing + FA Trash Icon + Strict Separation Hidden Iframe Background Auto Sync (5s Refresh + High Speed Clock Error Suppressor) + Premium Smooth Slower Panel Expansion Transition + Fix LocalStorage Collision Anti Rollback + Extra Blank Loading Guard Multi-Page + Premium Smooth Rounded Modal Expansion + Fix Ghost XDSoft Monthpicker Leak + Liquid Select2 Animated Dropdown + Fix Auto-Close Dropdown Bug + Fix Matcher Empty List Bug + Editable Notes with Smart Auto-Clipboard & Triple Date Callouts
+// @version      8.90
+// @description  Rounded Save Button + San Francisco Font + Realtime Storage Event Sync + Compact 2-Column Layout + Auto-Add Rows + Fast Typing + FA Trash Icon + Strict Separation Hidden Iframe Background Auto Sync (5s Refresh + High Speed Clock Error Suppressor) + Premium Smooth Slower Panel Expansion Transition + Fix LocalStorage Collision Anti Rollback + Extra Blank Loading Guard Multi-Page + Premium Smooth Rounded Modal Expansion + Fix Ghost XDSoft Monthpicker Leak + Liquid Select2 Animated Dropdown + Fix Auto-Close Dropdown Bug + Fix Matcher Empty List Bug + Editable Notes with Smart Auto-Clipboard & Triple Date Callouts + Auto WA Notifier (Smart Extract & No-Alert)
 // @author       Gemini AI & EMJE
 // @match        https://bintangbaru.bintangmedi4.com/penjualan/transaksi*
 // @match        https://bintangbaru.bintangmedi4.com/penjualan*
 // @match        https://bintangbaru.bintangmedi4.com/datapenjualan/riwayat*
 // @match        https://bintangbaru.bintangmedi4.com/pelanggan*
+// @match        https://web.whatsapp.com/*
 // @exclude      https://bintangbaru.bintangmedi4.com/penjualan/transaksi_cetak/*
 // @run-at       document-start
-// @grant        none
+// @grant        GM_setValue
+// @grant        GM_addValueChangeListener
 // ==/UserScript==
 
 /* global $, to_rupiah, HitungTotalBayar */
@@ -18,17 +20,47 @@
 (function () {
     'use strict';
 
+    // ==========================================
+    // BAGIAN 1: SCRIPT KHUSUS WHATSAPP WEB SENDER
+    // ==========================================
+    if (window.location.href.includes('whatsapp.com')) {
+        GM_addValueChangeListener('klik_wa_data', function(key, oldValue, newValue, remote) {
+            if (remote && newValue) {
+                let nomorClean = newValue.phone.replace(/[^0-9]/g, '');
+                const pesanUrl = encodeURIComponent(newValue.text);
+                
+                const linkRahasia = document.createElement('a');
+                linkRahasia.href = `https://web.whatsapp.com/send/?phone=${nomorClean}&text=${pesanUrl}&app_absent=1`;
+                linkRahasia.style.display = 'none';
+                
+                document.body.appendChild(linkRahasia);
+                linkRahasia.click();
+                
+                window.focus();
+                if (document.hidden) { window.focus(); }
+                setTimeout(() => { linkRahasia.remove(); }, 500);
+            }
+        });
+        return; // Hentikan eksekusi script sistem POS jika sedang berada di web WhatsApp
+    }
+
+    // ==========================================
+    // BAGIAN 2: SCRIPT SISTEM POS BINTANG MEDIA
+    // ==========================================
+
     // --- SETUP IDENTIFIKASI HALAMAN ---
     const isRiwayat = window.location.pathname.includes('/datapenjualan/riwayat');
     const isPelanggan = window.location.pathname.includes('/pelanggan');
     const isIframe = (window.self !== window.top);
     const isCetak = window.location.href.includes('transaksi_cetak');
+
     // Flag penanda agar auto-set 'Umum' hanya jalan 1x di awal
     let sudahAutoSetPelanggan = false;
 
     // --- BLANK LOADING GUARD (Mencegah Tampilan Bawaan Bocor) ---
     function kunciLayarBlank() {
         if (isIframe || isCetak) return;
+
         const styleProtector = document.createElement('style');
         styleProtector.id = 'bintang-blank-protector';
         styleProtector.innerHTML = `
@@ -39,6 +71,7 @@
                 overflow: hidden !important;
             }
         `;
+
         if (document.documentElement) {
             document.documentElement.appendChild(styleProtector);
         } else {
@@ -91,6 +124,7 @@
 
     function mulaiLogikaUtama() {
         if (isCetak) return;
+
         // --- SUNTIK LIBRARY SELECT2 SECARA DINAMIS ---
         if (!document.getElementById('select2-core-css') && (window.location.pathname.includes('/penjualan') || isPelanggan)) {
             const s2Css = document.createElement('link');
@@ -194,16 +228,26 @@
                     background:#fff; padding:10px; border:1px solid #ddd; border-radius:5px;
                     box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow: hidden; box-sizing: border-box;
                 }
-                .input-group-custom input { font-family: inherit; border:1px solid #ccc; padding:6px 8px; border-radius:4px; font-size:13px; width:100%; box-sizing: border-box; transition: border-color 0.2s, box-shadow 0.2s; }
-                .input-group-custom input:focus { border-color: #3498db; box-shadow: 0 0 5px rgba(52, 152, 219, 0.3); outline: none; }
-                .input-group-custom label { font-family: inherit; font-weight:bold; font-size:11px; color:#555; text-transform:uppercase; margin-top: 2px; margin-bottom: 1px; display: block; }
+                .input-group-custom input { font-family: inherit;
+                    border:1px solid #ccc; padding:6px 8px; border-radius:4px; font-size:13px; width:100%; box-sizing: border-box; transition: border-color 0.2s, box-shadow 0.2s;
+                }
+                .input-group-custom input:focus { border-color: #3498db;
+                    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3); outline: none;
+                }
+                .input-group-custom label { font-family: inherit;
+                    font-weight:bold; font-size:11px; color:#555; text-transform:uppercase; margin-top: 2px; margin-bottom: 1px; display: block;
+                }
                 .row-flex { display: flex; gap: 10px; width: 100%; }
                 .col-flex { flex: 1; display: flex; flex-direction: column; gap: 3px; position: relative; }
                 .datepicker-custom { background: #fff !important; cursor: pointer !important; padding-right: 40px !important; }
-                .btn-clear-date { position: absolute; right: 2px; bottom: 2px; width: 31px; height: 31px; padding: 0 !important; display: flex; align-items: center; justify-content: center; z-index: 5; transition: transform 0.1s; }
+                .btn-clear-date { position: absolute;
+                    right: 2px; bottom: 2px; width: 31px; height: 31px; padding: 0 !important; display: flex; align-items: center; justify-content: center; z-index: 5;
+                    transition: transform 0.1s; }
                 .btn-clear-date:active { transform: scale(0.9); }
 
-                .log-nota-time { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; color: #e74c3c; font-weight: bold; font-style: italic; display: block; margin-top: 4px; margin-bottom: 2px; }
+                .log-nota-time { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                    font-size: 11px; color: #e74c3c; font-weight: bold; font-style: italic; display: block; margin-top: 4px; margin-bottom: 2px;
+                }
                 #Simpann { border-radius: 4px !important; transition: all 0.2s ease-in-out; }
             `;
             document.head.appendChild(style);
@@ -216,6 +260,7 @@
                 modalContent.removeClass('modal-expanded');
                 setTimeout(function() { modalContent.addClass('modal-expanded'); }, 40);
             });
+
             $(document).on('DOMNodeInserted', '#ModalContent', function() {
                 const modalContent = $(this).closest('.modal-content');
                 if (modalContent.length && !modalContent.hasClass('modal-expanded')) {
@@ -269,6 +314,140 @@
                     if (!isIframe) { bukaKunciLayar(); }
                 }
             }, 1000);
+
+            // --- INTEGRASI TOMBOL WA NOTIFIER (HANYA DI HALAMAN RIWAYAT UTAMA, BUKAN IFRAME) ---
+            if (!isIframe) {
+                const styleWA = document.createElement('style');
+                styleWA.innerHTML = '@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }';
+                document.head.appendChild(styleWA);
+
+                function berikanIndikatorGagal(btn, svg) {
+                    btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" style="width: 12px; height: 12px; fill: white; vertical-align: middle;"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>`;
+                    btn.style.cssText += 'background-color: #e74c3c !important; border-color: #e74c3c !important;';
+                    btn.title = "Nomor Tidak Ditemukan!";
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = svg;
+                        btn.style.cssText += 'background-color: #25D366 !important; border-color: #ccc !important;';
+                        btn.title = "Kirim Pesan Selesai ke Konsumen";
+                    }, 2000);
+                }
+
+                function suntikTombolKeTabel() {
+                    const rows = document.querySelectorAll('tr[role="row"]');
+
+                    rows.forEach(row => {
+                        if (row.querySelector('.btn-wa-row')) return;
+
+                        const cells = row.querySelectorAll('td');
+                        if (cells.length < 15) return; 
+
+                        const kolomAksi = cells[14];
+                        const linkEditPenjualan = kolomAksi.querySelector('#EditPenjualan') || kolomAksi.querySelector('a[href*="transaksi_edit"]');
+                        if (!linkEditPenjualan) return;
+                        
+                        const tombolEditAsli = linkEditPenjualan.querySelector('button');
+
+                        const btnWA = document.createElement('button');
+                        btnWA.className = 'btn btn-success btn-xs btn-wa-row';
+                        
+                        const svgWA = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width: 14px; height: 14px; fill: white; vertical-align: middle;"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>`;
+                        btnWA.innerHTML = svgWA;
+                        btnWA.title = "Kirim Pesan Selesai ke Konsumen";
+                        
+                        btnWA.style.cssText = `
+                            display: inline-block !important;
+                            margin-left: 2px !important; 
+                            background-color: #25D366 !important; 
+                            border: 1px solid #ccc !important; 
+                            padding: 1px 5px !important; 
+                            height: 22px !important;
+                            width: 30px !important;
+                            border-radius: 3px !important;
+                            cursor: pointer !important;
+                            text-align: center !important;
+                            box-sizing: border-box !important;
+                            vertical-align: middle !important;
+                        `;
+
+                        btnWA.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+
+                            btnWA.innerHTML = `<svg class="fa-spin" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 12px; height: 12px; fill: white; animation: spin 1s linear infinite;"><path d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm416 0a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"/></svg>`;
+                            btnWA.style.cssText += 'background-color: #f1c40f !important; border-color: #f1c40f !important;';
+
+                            if (tombolEditAsli) tombolEditAsli.click();
+
+                            let batasWaktu = 0;
+                            let cekPopUp = setInterval(function() {
+                                batasWaktu += 150;
+                                const textareaUtuh = document.querySelector('textarea[name="keterangan_penjualan"]');
+                                
+                                if (textareaUtuh && textareaUtuh.value.trim() !== "") {
+                                    clearInterval(cekPopUp);
+
+                                    const teksLengkap = textareaUtuh.value;
+                                    const matchNomor = teksLengkap.match(/(62|08)[\d\s-]{7,17}/);
+                                    let nomorClean = '';
+                                    
+                                    if (matchNomor) {
+                                        nomorClean = matchNomor[0].replace(/[^0-9]/g, '');
+                                    }
+
+                                    if (nomorClean.startsWith('08')) {
+                                        nomorClean = '62' + nomorClean.slice(1);
+                                    }
+
+                                    if (nomorClean && nomorClean.length >= 10) {
+                                        let namaKonsumenAsli = "Pelanggan";
+                                        const ekstrakNama = teksLengkap.match(/^(.*?)\s*\(/);
+                                        if (ekstrakNama && ekstrakNama[1].trim() !== "") {
+                                            namaKonsumenAsli = ekstrakNama[1].trim();
+                                        }
+
+                                        btnWA.title = `Kirim Pesan Selesai ke ${namaKonsumenAsli}`;
+                                        const pesanTemplate = `Hallo, kita dari Percetakan Bintang Media.. Mau infoin kalau cetakanya sudah selesai dan sudah bisa diambil yaa.\nTerimakasih🙏🏻`;
+
+                                        GM_setValue('klik_wa_data', {
+                                            phone: nomorClean,
+                                            text: pesanTemplate,
+                                            timestamp: new Date().getTime()
+                                        });
+
+                                        btnWA.innerHTML = svgWA;
+                                        btnWA.style.cssText += 'background-color: #25D366 !important; border-color: #ccc !important;';
+                                    } else {
+                                        berikanIndikatorGagal(btnWA, svgWA);
+                                    }
+
+                                    const tombolCloseModal = document.querySelector('.modal-header .close') || 
+                                                             document.querySelector('[data-dismiss="modal"]') ||
+                                                             document.querySelector('.modal-footer .btn-danger');
+                                    if (tombolCloseModal) tombolCloseModal.click();
+
+                                } else if (batasWaktu >= 2500) { 
+                                    clearInterval(cekPopUp);
+                                    const tombolCloseModal = document.querySelector('.modal-header .close') || document.querySelector('[data-dismiss="modal"]');
+                                    if (tombolCloseModal) tombolCloseModal.click();
+                                    
+                                    berikanIndikatorGagal(btnWA, svgWA);
+                                }
+                            }, 150); 
+                        });
+
+                        linkEditPenjualan.after(btnWA);
+                    });
+                }
+
+                setTimeout(suntikTombolKeTabel, 1000);
+                const targetNode = document.getElementById('my-grid') || document.querySelector('table') || document.body;
+                if (targetNode) {
+                    const observer = new MutationObserver(suntikTombolKeTabel);
+                    observer.observe(targetNode, { childList: true, subtree: true });
+                }
+            }
+
             if (isIframe) { setTimeout(function() { window.location.reload(); }, 5000); }
             return;
         }
@@ -313,7 +492,8 @@
             const timestampStr = localStorage.getItem('bintang_nota_terakhir_time');
             const kasirTerakhir = localStorage.getItem('bintang_kasir_terakhir') || '-';
 
-            if (!timestampStr) { logContainer.html(`Belum ada data update`); return; }
+            if (!timestampStr) { logContainer.html(`Belum ada data update`);
+                return; }
 
             const timestamp = parseInt(timestampStr, 10);
             let selisihDetik = Math.floor((Date.now() - timestamp) / 1000);
@@ -321,11 +501,14 @@
 
             let waktuText = '';
             if (selisihDetik < 10) { waktuText = 'baru saja'; }
-            else if (selisihDetik < 60) { waktuText = `${selisihDetik} detik yang lalu`; }
+            else if (selisihDetik < 60) { waktuText = `${selisihDetik} detik yang lalu`;
+            }
             else {
                 const menit = Math.floor(selisihDetik / 60);
-                if (menit < 60) { waktuText = `${menit} menit yang lalu`; }
-                else { const jam = Math.floor(menit / 60); waktuText = `${jam} jam yang lalu`; }
+                if (menit < 60) { waktuText = `${menit} menit yang lalu`;
+                }
+                else { const jam = Math.floor(menit / 60);
+                waktuText = `${jam} jam yang lalu`; }
             }
             logContainer.html(`Terakhir diupdate ${waktuText} oleh ${kasirTerakhir}`);
         }
@@ -337,14 +520,17 @@
 
         // --- FIX MATCHER: CUSTOM FILTER SELECT2 AGAR KATA YANG SAMA PERSIS / COCOK TIDAK HILANG DARI LIST ---
         function customSelect2Matcher(params, data) {
-            if ($.trim(params.term) === '') { return data; }
-            if (typeof data.text === 'undefined') { return null; }
+            if ($.trim(params.term) === '') { return data;
+            }
+            if (typeof data.text === 'undefined') { return null;
+            }
 
             var searchTerm = params.term.toLowerCase();
             var optionText = data.text.toLowerCase();
             if (optionText.includes('silahkan pilih')) { return null; }
 
-            if (optionText.indexOf(searchTerm) > -1) { return data; }
+            if (optionText.indexOf(searchTerm) > -1) { return data;
+            }
             return null;
         }
 
@@ -373,7 +559,8 @@
             currentTxt = currentTxt.replace(/- DP\s*:\s*\d{2}\.\d{2}\.\d{4}/g, '');
             currentTxt = currentTxt.replace(/- TF\s*:\s*\d{2}\.\d{2}\.\d{4}/g, '');
             currentTxt = currentTxt.replace(/- CASH\s*:\s*\d{2}\.\d{2}\.\d{4}/g, '');
-            if (existingHP) { currentTxt = currentTxt.replace(existingHP, ''); }
+            if (existingHP) { currentTxt = currentTxt.replace(existingHP, '');
+            }
 
             // Atur ulang spasi ketikan manual agar rapi
             currentTxt = currentTxt.replace(/\s+/g, ' ').trim();
@@ -393,6 +580,7 @@
             if (formattedDP) pieces.push(formattedDP);
             if (formattedTF) pieces.push(formattedTF);
             if (formattedCASH) pieces.push(formattedCASH);
+
             const hasil = pieces.filter(p => p.trim() !== '').join(' ');
             $('#catatan').val(hasil).trigger('input');
         }
@@ -465,6 +653,7 @@
                 const target = $(this).data('target');
                 $(target).val('').trigger('change');
             });
+
             $('#input-dp-custom, #input-tf-custom, #input-cash-custom').on('change', sinkronkanCatatan);
         }
 
@@ -487,6 +676,7 @@
             jalankanSelect2Liquid();
             if (window.location.pathname.includes('/penjualan')) {
                 suntikIframeMataMata();
+
                 const notaAwal = localStorage.getItem('bintang_nota_terakhir');
                 prosesSyncNomorNota(notaAwal);
 
@@ -506,6 +696,7 @@
         $(document).on('input keyup change', '#ukuran_panjang, #ukuran_lebar', function () {
             HitungUlangBarisRealtime($(this).closest('tr').index());
         });
+
         inisialisasi();
 
         setInterval(inisialisasi, 1000);
