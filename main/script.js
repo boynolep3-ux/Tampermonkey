@@ -7,7 +7,7 @@
     const subScripts = [
         "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/BintangMedia-AutoRefreshListNota.js",
         "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/BintangMedia-FixTombolBarisBaru.js",
-        "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/BintangMedia-NotaOverhauol.js",
+        "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/BintangMedia-NotaOverhaul.js",
         "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/BintangMedia-SoftwareNota.js",
     ];
 
