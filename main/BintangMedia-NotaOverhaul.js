@@ -1,19 +1,3 @@
-// ==UserScript==
-// @name         Bintang Media - Nota Overhaul
-// @namespace    BintangMediaBridge System
-// @version      19.2
-// @description  Layar penuh Nota, Otomatis Baca Nomor Tanpa Teks Indikator, Pindah Tab WA, dan Auto-Paste Gambar (Fit & Crop)
-// @author       Anda
-// @match        *https://bintangbaru.bintangmedi4.com/penjualan/transaksi_cetaks/*
-// @match        https://web.whatsapp.com/*
-// @grant        GM_addStyle
-// @grant        GM_setValue
-// @grant        GM_getValue
-// @grant        GM_addValueChangeListener
-// @require      https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js
-// @run-at       document-end
-// ==/UserScript==
-
 (function() {
     'use strict';
 
