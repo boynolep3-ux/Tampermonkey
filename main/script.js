@@ -8,10 +8,7 @@
         "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/BintangMedia-AutoRefreshListNota.js",
         "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/BintangMedia-FixTombolBarisBaru.js",
         "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/BintangMedia-NotaOverhaul.js",
-        "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/BintangMedia-RedTheme.js",
         "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/BintangMedia-SoftwareNota.js",
-        "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/WhatsAppWebCDR&JPEGFileDownloaderFixer.js",
-        "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/WhatsAppWebtoBintangMediaTransaksiBridge.js"
     ];
 
     for (const url of subScripts) {
