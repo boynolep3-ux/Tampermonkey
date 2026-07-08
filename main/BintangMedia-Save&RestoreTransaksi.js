@@ -1,3 +1,5 @@
+/* global $, to_rupiah, HitungTotalBayar */
+
 (function() {
     'use strict';
 
@@ -231,9 +233,7 @@
         templates[cleanedName] = data;
         localStorage.setItem(STORAGE_KEY, JSON.stringify(templates));
 
-        // FIX: Otomatis jadikan template yang baru disimpan sebagai yang aktif (terpilih)
         activeTemplate = cleanedName;
-
         renderTemplateButtons();
     }
 
@@ -405,6 +405,9 @@
         const btnBarisBaru = document.getElementById('BarisBaru');
         if (!btnBarisBaru) return;
 
+        // Cegah tombol ganda terpasang berkali-kali
+        if (document.getElementById('bintang-save-container')) return;
+
         const totalBayarContainer = btnBarisBaru.closest('.TotalBayar');
         if (totalBayarContainer) {
             totalBayarContainer.style.position = 'relative';
@@ -491,7 +494,6 @@
             }, { passive: false });
         }
 
-        // Tombol panah kiri
         document.getElementById('btn_scroll_l').addEventListener('click', (e) => {
             e.preventDefault();
             const maxScroll = containerList.scrollWidth - containerList.clientWidth;
@@ -504,7 +506,6 @@
             }
         });
 
-        // Tombol panah kanan
         document.getElementById('btn_scroll_r').addEventListener('click', (e) => {
             e.preventDefault();
             const maxScroll = containerList.scrollWidth - containerList.clientWidth;
@@ -517,7 +518,6 @@
             }
         });
 
-        // Logika tombol save manual
         document.getElementById('btn_manual_save').addEventListener('click', (e) => {
             e.preventDefault();
 
@@ -535,7 +535,6 @@
             saveFormDataManual(nama);
         });
 
-        // Logika tombol Show / Hide (Mata) - Warna KONSISTEN PUTIH
         document.getElementById('btn_toggle_template').addEventListener('click', (e) => {
             e.preventDefault();
             const btnToggle = e.currentTarget;
@@ -548,23 +547,17 @@
                 viewport.classList.remove('bintang-hidden');
                 iconToggle.className = 'fa fa-eye fa-lg';
                 btnToggle.title = "Sembunyikan Templates";
-
-                // Tetap putih saat aktif
                 btnToggle.style.backgroundColor = '#FFFFFF';
                 btnToggle.style.color = '#333333';
                 btnToggle.style.borderColor = '#CCCCCC';
-
                 setTimeout(updateScrollVisibility, 150);
             } else {
                 viewport.classList.add('bintang-hidden');
                 iconToggle.className = 'fa fa-eye-slash fa-lg';
                 btnToggle.title = "Tampilkan Templates";
-
-                // Tetap putih saat disembunyikan
                 btnToggle.style.backgroundColor = '#FFFFFF';
                 btnToggle.style.color = '#333333';
                 btnToggle.style.borderColor = '#CCCCCC';
-
                 updateScrollVisibility();
             }
         });
@@ -632,10 +625,12 @@
         }, 50);
     }
 
-    window.addEventListener('load', () => {
-        setTimeout(() => {
+    // GANTI BAGIAN UTAMA: Gunakan interval tunggu elemen siap, anti-gagal load di CDN Master
+    const checkElementExist = setInterval(() => {
+        if (document.getElementById('BarisBaru')) {
+            clearInterval(checkElementExist);
             injectUI();
-        }, 800);
-    });
+        }
+    }, 100);
 
 })();
