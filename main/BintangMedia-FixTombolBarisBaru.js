@@ -1,15 +1,3 @@
-// ==UserScript==
-// @name         Bintang Media - Fix Tombol Baris Baru
-// @namespace    http://tampermonkey.net/
-// @version      1.3
-// @description  Memperbaiki tombol + dengan tampilan persis sesuai request saat mencapai max 8 baris
-// @author       EMJE
-// @match        https://bintangbaru.bintangmedi4.com/penjualan/transaksi
-// @grant        none
-// ==/UserScript==
-
-
-
 (function() {
 
     'use strict';
