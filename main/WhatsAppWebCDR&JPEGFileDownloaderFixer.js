@@ -1,15 +1,3 @@
-// ==UserScript==
-// @name         WhatsApp Web CDR & JPEG File Downloader Fixer
-// @namespace    http://tampermonkey.net/
-// @version      1.1
-// @description  Otomatis mengubah nama file .cdr.zip menjadi .cdr dan .jpg.jpeg menjadi .jpg saat diunduh di WhatsApp Web
-// @author       Anda
-// @match        https://web.whatsapp.com/*
-// @icon         https://www.google.com/s2/favicons?bb=me&domain=whatsapp.com
-// @grant        none
-// @run-at       document-start
-// ==/UserScript==
-
 (function() {
     'use strict';
 
