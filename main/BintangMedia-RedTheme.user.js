@@ -1,13 +1,3 @@
-// ==UserScript==
-// @name         Bintang Media - Red Theme
-// @namespace    http://tampermonkey.net/
-// @version      32.17
-// @author       Hitami & Gemini
-// @match        https://bintangbaru.bintangmedi4.com/*
-// @grant        none
-// @run-at       document-idle
-// ==/UserScript==
-
 (function() {
     'use strict';
 
