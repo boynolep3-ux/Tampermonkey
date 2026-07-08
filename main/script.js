@@ -5,10 +5,10 @@
 
     // Nama file sudah diganti menjadi .js biasa tanpa kata .user
     const subScripts = [
-        "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/BintangMedia-AutoRefreshListNota.js",
+        "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/main/BintangMedia-AutoRefreshListNota.js",
         "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/BintangMedia-FixTombolBarisBaru.js",
         "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/BintangMedia-NotaOverhaul.js",
-        "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/BintangMedia-RedTheme.js",
+        "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/main/BintangMedia-RedTheme.js",
         "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/BintangMedia-SoftwareNota.js",
         "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/WhatsAppWebCDR&JPEGFileDownloaderFixer.js",
         "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/WhatsAppWebtoBintangMediaTransaksiBridge.js"
