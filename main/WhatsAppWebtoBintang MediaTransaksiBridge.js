@@ -1,17 +1,3 @@
-// ==UserScript==
-// @name         WhatsApp Web to Bintang Media Transaksi Bridge
-// @namespace    BintangMediaBridge System
-// @version      2.0
-// @description  Otomatis pindah tab ke Transaksi saat klik Copy di WA memakai trik Hash-Click Navigation (Tanpa Reload)
-// @author       Anda & AI
-// @match        https://web.whatsapp.com/*
-// @match        https://bintangbaru.bintangmedi4.com/penjualan/transaksi*
-// @grant        GM_setValue
-// @grant        GM_getValue
-// @grant        GM_addValueChangeListener
-// @run-at       document-end
-// ==/UserScript==
-
 (function() {
     'use strict';
 
