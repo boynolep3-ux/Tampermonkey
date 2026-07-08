@@ -1,18 +1,3 @@
-// ==UserScript==
-// @name         Bintang Media - Software Nota
-// @namespace    http://tampermonkey.net/
-// @version      8.89
-// @description  Rounded Save Button + San Francisco Font + Realtime Storage Event Sync + Compact 2-Column Layout + Auto-Add Rows + Fast Typing + FA Trash Icon + Strict Separation Hidden Iframe Background Auto Sync (5s Refresh + High Speed Clock Error Suppressor) + Premium Smooth Slower Panel Expansion Transition + Fix LocalStorage Collision Anti Rollback + Extra Blank Loading Guard Multi-Page + Premium Smooth Rounded Modal Expansion + Fix Ghost XDSoft Monthpicker Leak + Liquid Select2 Animated Dropdown + Fix Auto-Close Dropdown Bug + Fix Matcher Empty List Bug + Editable Notes with Smart Auto-Clipboard & Triple Date Callouts
-// @author       Gemini AI & EMJE
-// @match        https://bintangbaru.bintangmedi4.com/penjualan/transaksi*
-// @match        https://bintangbaru.bintangmedi4.com/penjualan*
-// @match        https://bintangbaru.bintangmedi4.com/datapenjualan/riwayat*
-// @match        https://bintangbaru.bintangmedi4.com/pelanggan*
-// @exclude      https://bintangbaru.bintangmedi4.com/penjualan/transaksi_cetak/*
-// @run-at       document-start
-// @grant        none
-// ==/UserScript==
-
 /* global $, to_rupiah, HitungTotalBayar */
 
 (function () {
