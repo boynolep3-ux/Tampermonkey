@@ -3,18 +3,17 @@
 
     console.log("[Master Loader] Memulai loading sub-scripts...");
 
-    // Daftar seluruh script dari Bintang Media & WhatsApp Web sesuai image_dabbe8.png
+    // Nama file sudah diganti menjadi .js biasa tanpa kata .user
     const subScripts = [
-        "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/BintangMedia-AutoRefreshListNota.user.js",
-        "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/BintangMedia-FixTombolBarisBaru.user.js",
-        "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/BintangMedia-NotaOverhaul.user.js",
-        "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/BintangMedia-RedTheme.user.js",
-        "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/BintangMedia-SoftwareNota.user.js",
-        "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/WhatsAppWebCDR&JPEGFileDownloaderFixer.user.js",
-        "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/WhatsAppWebtoBintangMediaTransaksiBridge.user.js"
+        "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/BintangMedia-AutoRefreshListNota.js",
+        "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/BintangMedia-FixTombolBarisBaru.js",
+        "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/BintangMedia-NotaOverhaul.js",
+        "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/BintangMedia-RedTheme.js",
+        "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/BintangMedia-SoftwareNota.js",
+        "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/WhatsAppWebCDR&JPEGFileDownloaderFixer.js",
+        "https://raw.githubusercontent.com/boynolep3-ux/Tampermonkey/main/WhatsAppWebtoBintangMediaTransaksiBridge.js"
     ];
 
-    // Meload dan mengeksekusi sub-scripts satu per satu secara berurutan
     for (const url of subScripts) {
         try {
             const response = await fetch(url);
