@@ -5,9 +5,9 @@
 
     // Link yang sudah disesuaikan dengan folder /main/ di GitHub kamu
     const subScripts = [
-        "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/BintangMedia-AutoRefreshListNota.js",
-        "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/BintangMedia-FixTombolBarisBaru.js",
-        "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/BintangMedia-SoftwareNota.js",
+        "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/BintangMedia-XXAutoRefreshListNota.js",
+        "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/BintangMedia-XXFixTombolBarisBaru.js",
+        "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/BintangMedia-XXSoftwareNota.js",
         "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/WhatsAppWebCDR&JPEGFileDownloaderFixer.js",
         "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/BintangMedia-Save&RestoreTransaksi.js",
     ];
