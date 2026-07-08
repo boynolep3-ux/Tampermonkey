@@ -8,7 +8,7 @@
         "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/BintangMedia-XXAutoRefreshListNota.js",
         "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/BintangMedia-XXFixTombolBarisBaru.js",
         "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/BintangMedia-XXSoftwareNota.js",
-        "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/WhatsAppWebCDR&JPEGFileDownloaderFixer.js",
+        "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/XXWhatsAppWebCDR&JPEGFileDownloaderFixer.js",
         "https://cdn.jsdelivr.net/gh/boynolep3-ux/Tampermonkey@latest/main/XXBintangMedia-Save&RestoreTransaksi.js",
     ];
 
