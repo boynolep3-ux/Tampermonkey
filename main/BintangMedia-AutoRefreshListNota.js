@@ -1,14 +1,3 @@
-// ==UserScript==
-// @name         Bintang Media - Auto Refresh List Nota
-// @namespace    http://tampermonkey.net/
-// @version      1.2
-// @description  Auto refresh tabel data tanpa reload halaman (Fix context & DataTables)
-// @author       Gemini
-// @match        *://bintangbaru.bintangmedi4.com/datapenjualan/riwayat*
-// @grant        unsafeWindow
-// @run-at       document-end
-// ==/UserScript==
-
 (function() {
     'use strict';
 
