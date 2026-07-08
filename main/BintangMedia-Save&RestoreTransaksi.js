@@ -1,14 +1,3 @@
-// ==UserScript==
-// @name         Bintang Media - Save & Restore Transaksi
-// @namespace    http://tampermonkey.net/
-// @version      4.1.9
-// @description  Menyimpan transaksi dengan horizontal wheel Pixel-Perfect, animasi murni MENGGESER (Slide-out/in) dari tombol mata, proteksi tombol scroll otomatis, warna tombol mata konsisten putih, dan auto-select setelah save.
-// @author       You
-// @match        https://bintangbaru.bintangmedi4.com/penjualan/transaksi*
-// @match        https://bintangbaru.bintangmedi4.com/penjualan*
-// @grant        none
-// ==/UserScript==
-
 (function() {
     'use strict';
 
